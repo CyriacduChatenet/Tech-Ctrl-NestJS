@@ -1,0 +1,15 @@
+import { IsString, IsObject } from "class-validator";
+
+export class SignupUserInputDTO {
+  @IsString()
+  username: string;
+
+  @IsString()
+  email: string;
+
+  @IsString()
+  password?: string;
+
+  @IsString()
+  roles?: string;
+}
