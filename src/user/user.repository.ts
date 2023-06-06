@@ -24,14 +24,7 @@ export class UserRepository extends Repository<User> {
     page = page ? +page : 1;
     limit = limit ? +limit : 10;
 
-    const query = this.createQueryBuilder('user')
-      .leftJoinAndSelect('user.traveler', 'traveler')
-      .leftJoinAndSelect('traveler.tastes', 'tastes')
-      .leftJoinAndSelect('traveler.travels', 'travels')
-      .leftJoinAndSelect('traveler.comments', 'comments')
-      .leftJoinAndSelect('user.customer', 'customer')
-      .leftJoinAndSelect('user.advertiser', 'advertiser')
-      .leftJoinAndSelect('user.resetPasswordToken', 'resetPasswordToken');
+    const query = this.createQueryBuilder('user');
 
     if (sortedBy) {
       query.orderBy('user.createdAt', sortedBy);
@@ -65,14 +58,6 @@ export class UserRepository extends Repository<User> {
   async findOneUserByEmail(email: string): Promise<User> {
     return await this.createQueryBuilder('user')
       .where('user.email = :email', { email })
-      .leftJoinAndSelect('user.traveler', 'traveler')
-      .leftJoinAndSelect('user.customer', 'customer')
-      .leftJoinAndSelect('traveler.travels', 'travels')
-      .leftJoinAndSelect('traveler.tastes', 'tastes')
-      .leftJoinAndSelect('traveler.comments', 'comments')
-      .leftJoinAndSelect('user.advertiser', 'advertiser')
-      .leftJoinAndSelect('advertiser.activities', 'activities')
-      .leftJoinAndSelect('user.resetPasswordToken', 'resetPasswordToken')
       .getOne();
   }
 

@@ -8,7 +8,6 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { SigninDTO } from './dto/signin.dto';
-import { Role } from '../config/enum/role.enum';
 import { UserService } from '../user/user.service';
 import { SignupUserInputDTO } from '../user/dto/signup-user.dto';
 
@@ -75,15 +74,7 @@ export class AuthService {
         roles: signupUserInputDTO.roles,
       });
 
-      const payload = {
-        email: signupUserInputDTO.email,
-        password: signupUserInputDTO.password,
-        roles: signupUserInputDTO.roles,
-      };
-      return {
-        signinToken: this.jwtService.sign(payload),
-        user,
-      };
+      return user;
     } catch (err) {
       throw new UnauthorizedException(err);
     }
