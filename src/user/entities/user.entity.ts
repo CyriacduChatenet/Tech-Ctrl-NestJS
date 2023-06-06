@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Role } from '../../config/enum/role.enum';
 import { Timestamp } from '../../config/utils/timestamp.util';
+import { Post } from 'src/post/entities/post.entity';
 
 @Entity()
 export class User extends Timestamp {
@@ -24,4 +25,7 @@ export class User extends Timestamp {
     nullable: false,
   })
   roles: Role;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 }

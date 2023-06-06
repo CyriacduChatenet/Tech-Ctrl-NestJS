@@ -49,6 +49,7 @@ export class UserRepository extends Repository<User> {
       limit: limit,
       total: await query.getCount(),
       data: await query
+        .leftJoinAndSelect('user.posts', 'posts')
         .skip((page - 1) * limit)
         .take(limit)
         .getMany(),
@@ -58,6 +59,7 @@ export class UserRepository extends Repository<User> {
   async findOneUserByEmail(email: string): Promise<User> {
     return await this.createQueryBuilder('user')
       .where('user.email = :email', { email })
+      .leftJoinAndSelect('user.posts', 'posts')
       .getOne();
   }
 
